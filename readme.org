@@ -1,7 +1,17 @@
 * Turing Drawings with Processing and Arduino
-Final project for UCSB Art 122 by Kasper Primdal Lauritzen
+Final project for UCSB Art 122 (Spring 2013) by Kasper Primdal Lauritzen.
 
 ** Abstract
+
 ** Background
+The idea for the project came from [[http://maximecb.github.io/Turing-Drawings/][Maxime Chevalier-Boisvert]]s
+website, where a simple Turing Drawing generator lets you see a quick
+simulation of random rules.
+
+Another inspiration is Stephen Wolfram's /A New Kind of Science/[fn:1]. Here the simplest rules, Cellular Automata, are described and explored (esp. chapter 3). 
 ** Goals
+The goal is to let the audience explore the patterns and flows that simple
+rules can create. 
 ** Implementation
+* Footnotes
+[fn:1] Stephen Wolfram, "A New Kind of Science," (Wolfram Media, 2002), [[http://www.wolframscience.com/nksonline/toc.html][Online here]]
