@@ -1,0 +1,7 @@
+* Turing Drawings with Processing and Arduino
+Final project for UCSB Art 122 by Kasper Primdal Lauritzen
+
+** Abstract
+** Background
+** Goals
+** Implementation
