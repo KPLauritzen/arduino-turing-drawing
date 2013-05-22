@@ -7,13 +7,15 @@ int CW = 1; // Turn clockwise
 int CCW = 3; // Turn counterclockwise
 
 void setup(){
+    // I want highest possible framerate
     frameRate(1000);
-    println(-1 % 100);
     size(200, 200);
     background(white);
+
     world = new int[width][height];
 
     // Loop through world
+    // There might be a world = zeros() function instead
     for (int x=0; x<width; x++){
         for (int y=0; y<height; y++){
             world[x][y]= 0;
@@ -28,6 +30,7 @@ void setup(){
 }
 
 void draw(){
+    // Sample rule
     if (world[onX][onY] == 0){
         set(onX,onY, white);
         world[onX][onY] = 1;
@@ -38,6 +41,8 @@ void draw(){
         world[onX][onY] = 0;
         heading = (heading + CCW) % 4;
     }
+
+    // Follow heading, update onX, onY
     getNewCoor(onX, onY);
     // println(frameRate);
 }
@@ -48,13 +53,13 @@ void getNewCoor(int X, int Y){
     if (heading == 0){ // North
         onY = (Y - 1 + height) % height;
     }
-    if (heading == 1){ // East
+    else if (heading == 1){ // East
         onX = (X + 1 + width) % width;
     }
-    if (heading == 2){
+    else if (heading == 2){ // South
         onY = (Y + 1 + height)% height;
     }
-    if (heading == 3){
+    else if (heading == 3){ // West
         onX = (X - 1 + width)% width;
     }
     // Adding size to avoid having negative numbers
