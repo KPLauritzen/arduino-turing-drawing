@@ -9,7 +9,7 @@ The audience will be able to create a Turing Drawing with randomized rules. Then
 ** Background
 The idea for the project came from [[http://maximecb.github.io/Turing-Drawings/][Maxime Chevalier-Boisvert]]s
 website, where a simple Turing Drawing generator lets you see a quick
-simulation of random rules.
+simulation of random rules (Cool examples [[http://maximecb.github.io/Turing-Drawings/#4,3,2,1,2,1,2,3,0,1,1,1,2,2,1,1,3,1,1,2,2,2,1,2,1,2,3,2,0,3,1,2,0,2,1,3,2,0][here]] and [[http://maximecb.github.io/Turing-Drawings/#4,3,3,1,3,2,2,2,1,1,3,3,1,2,1,1,1,3,1,0,2,2,0,2,1,3,0,2,3,2,1,3,0,1,3,3,1,0][here]]).
 
 Another inspiration is Stephen Wolfram's /A New Kind of Science/ [1]. Here the simplest possible rules, Cellular Automata, are described and explored (esp. in chapter 3). 
 
@@ -27,4 +27,5 @@ It is interesting to experience the rules unfold into patterns that can't be pre
 
 * Footnotes
 [1] Stephen Wolfram, "A New Kind of Science," (Wolfram Media, 2002), [[http://www.wolframscience.com/nksonline/toc.html][Online here]]
-[2] Martin Gardner, "Mathematical Games - The fantastic combinations of John Conway's new solitaire game 'life'". Scientific American 223. pp. 120–123
+
+[2] Martin Gardner, "Mathematical Games - The fantastic combinations of John Conway's new solitaire game 'life'". Scientific American 223. pp. 120–123 
