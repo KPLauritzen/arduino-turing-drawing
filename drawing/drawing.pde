@@ -3,6 +3,8 @@ color black = color(0);
 color white = color(255);
 int onX, onY;
 int heading; // N=0, E=1, S=2, W=3
+int CW = 1; // Turn clockwise
+int CCW = 3; // Turn counterclockwise
 
 void setup(){
     frameRate(1000);
@@ -29,19 +31,22 @@ void draw(){
     if (world[onX][onY] == 0){
         set(onX,onY, white);
         world[onX][onY] = 1;
+        heading = (heading + CW) % 4;
     }
-    if (world[onX][onY] == 1){
+    else if (world[onX][onY] == 1){
         set(onX,onY, black);
         world[onX][onY] = 0;
+        heading = (heading + CCW) % 4;
     }
     getNewCoor(onX, onY);
-
+    // println(frameRate);
 }
+
 
 
 void getNewCoor(int X, int Y){
     if (heading == 0){ // North
-        onY = (Y -1 + height) % height;
+        onY = (Y - 1 + height) % height;
     }
     if (heading == 1){ // East
         onX = (X + 1 + width) % width;
@@ -53,5 +58,4 @@ void getNewCoor(int X, int Y){
         onX = (X - 1 + width)% width;
     }
     // Adding size to avoid having negative numbers
-    heading = int(random(4));
 }
