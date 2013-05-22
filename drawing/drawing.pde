@@ -8,7 +8,7 @@ int CCW = 3; // Turn counterclockwise
 
 void setup(){
     // I want highest possible framerate
-    frameRate(1000);
+    frameRate(10000);
     size(200, 200);
     background(white);
 
