@@ -64,3 +64,12 @@ void getNewCoor(int X, int Y){
     }
     // Adding size to avoid having negative numbers
 }
+
+// Get some interactivity going
+void keyPressed(){
+    if (key == 'c'){
+        // Switch CW and CCW. Ugly hack
+        CW = (CW + 2) % 4;
+        CCW = (CCW + 2)%4;
+    }
+}
