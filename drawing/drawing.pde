@@ -5,11 +5,12 @@ int onX, onY;
 int heading; // N=0, E=1, S=2, W=3
 int CW = 1; // Turn clockwise
 int CCW = 3; // Turn counterclockwise
+int speed = 25;
 
 void setup(){
     // I want highest possible framerate
     frameRate(10000);
-    size(200, 200);
+    size(400,400);
     background(white);
 
     world = new int[width][height];
@@ -30,21 +31,21 @@ void setup(){
 }
 
 void draw(){
-    // Sample rule
-    if (world[onX][onY] == 0){
-        set(onX,onY, white);
-        world[onX][onY] = 1;
-        heading = (heading + CW) % 4;
+    for(int i = 0; i < speed; i++){
+        // Sample rule
+        if (world[onX][onY] == 0){
+            set(onX,onY, white);
+            world[onX][onY] = 1;
+            heading = (heading + CW) % 4;
+        }
+        else if (world[onX][onY] == 1){
+            set(onX,onY, black);
+            world[onX][onY] = 0;
+            heading = (heading + CCW) % 4;
+        }
+        // Follow heading, update onX, onY
+        getNewCoor(onX, onY);
     }
-    else if (world[onX][onY] == 1){
-        set(onX,onY, black);
-        world[onX][onY] = 0;
-        heading = (heading + CCW) % 4;
-    }
-
-    // Follow heading, update onX, onY
-    getNewCoor(onX, onY);
-    // println(frameRate);
 }
 
 
@@ -71,5 +72,11 @@ void keyPressed(){
         // Switch CW and CCW. Ugly hack
         CW = (CW + 2) % 4;
         CCW = (CCW + 2)%4;
+    }
+    else if (key == 'f'){
+        speed++;
+    }
+    else if (key == 's'){
+        speed--;
     }
 }
