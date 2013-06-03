@@ -7,16 +7,16 @@ color blue = color(0,0,255);
 int onX, onY;
 int heading; // N=0, E=1, S=2, W=3
 int speed = 25;
-int nColors = 2;
-int nStates = 2;
+int nColors = 3;
+int nStates = 4;
 int state;
 int [][][] rules;
 color [] colors;
+// int [][][][][] coolRules;
 
 
 void setup(){
-    // I want highest possible framerate
-    frameRate(1000);
+    frameRate(10000);
     size(200,200);
     background(white);
 
@@ -31,7 +31,7 @@ void setup(){
     rules = new int[nColors][nStates][3];
     setRandomRule();
     
-    // Cool rule.
+    // Cool 2x2 rule.
     // rules[0][0][0] = 1;
     // rules[0][0][1] = 3;
     // rules[0][0][2] = 0;
@@ -55,8 +55,8 @@ void setup(){
     }
 
     // Set ON cell
-    onX = int(random(width));
-    onY = int(random(height));
+    onX = int(width/2);
+    onY = int(height/2);
     world[onX][onY] = 1;
     heading = int(random(4));
     state = 1;
@@ -120,10 +120,12 @@ void keyPressed(){
     }
     else if (key == 's'){
         speed--;
+        if (speed < 1){speed = 1;}
     }
     else if (key == 'r'){
-        //reset canvas
+        // reset canvas
         background(white);
+        // reset world
         for (int x=0; x<width; x++){
             for (int y=0; y<height; y++){
                 world[x][y]= 0;
