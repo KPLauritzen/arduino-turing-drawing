@@ -12,12 +12,13 @@ int nStates = 4;
 int state;
 int [][][] rules;
 color [] colors;
+boolean isDrawing = true;
 // int [][][][][] coolRules;
 
 
 void setup(){
     frameRate(10000);
-    size(200,200);
+    size(400,400);
     background(white);
 
     world = new int[width][height];
@@ -73,7 +74,6 @@ void draw(){
         heading = (heading + changeHeading) % 4; 
         // Follow heading, update onX, onY
         getNewCoor(onX, onY);
-        println(state);
     }
 }
 
@@ -130,6 +130,16 @@ void keyPressed(){
             for (int y=0; y<height; y++){
                 world[x][y]= 0;
             }
+        }
+    }
+    else if (key == 'p'){
+        if (isDrawing){
+            noLoop();
+            isDrawing = false;
+        }
+        else{
+            loop();
+            isDrawing = true;
         }
     }
 }
