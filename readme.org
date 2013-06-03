@@ -24,6 +24,12 @@ rules can create.
 It is interesting to experience the rules unfold into patterns that can't be predicted from just thinking about the rules. They have to be simulated 'for the magic to happen'. 
 
 ** Implementation
+I'll make a 2D Array, /world/, representing the state, ie. what is displayed on screen (This works for 2 colors, for 3 colors it should be a 3D Array, with the color in the third dimension). 
+
+I have an 'active cell' that will move and update each time-step. It will update according to the rules picked from the list of all possible rules. 
+
+*IDEA*: To get /really/ fast drawing, the active cell could run in a for loop in the draw function, and after we have looped for some time we update the screen with the current state of /world/. Might speed it up. Without it I can achieve sub 10k fps. But a display can update around 60 Hz. Right?
+
 
 * Footnotes
 [1] Stephen Wolfram, "A New Kind of Science," (Wolfram Media, 2002), [[http://www.wolframscience.com/nksonline/toc.html][Online here]]
