@@ -4,16 +4,59 @@ Final project for UCSB Art 122 (Spring 2013) by Kasper Primdal Lauritzen.
 ** Abstract
 I created a way for the audience to see, create and play with Turing
 Drawings. A Turing Drawing is a 2D picture that evolves, pixel by
-pixel, according to simple rules. 
-  
-|   |   |   |   |   |
-|---+---+---+---+---|
-|   |   |   |   |   |
+pixel, according to simple rules. This is a
+Universal Turing Machine (It can in theory produce any desired
+output). 
 
+Simple rules can create powerful patterns, oscillations or seemingly
+random noise.
 
-I will create a way for the audience to see, create and alter Turing Drawings.  (e.g. if cell is black, paint it white and turn left 90 degrees). It is a Turing Machine with a 2D tape, and a 'heading' on the tape. Simple rules can create powerful patterns, oscillations or seemingly random noise.
+The audience will be able to create a Turing Drawing with randomized
+rules. Then, if the pattern emerging are interesting, she will be able
+to save those rules to a growing library of curated rules. There will
+be an option to change the rules of the drawing at any time, either to
+new random rules or fetching them from the library. 
 
-The audience will be able to create a Turing Drawing with randomized rules. Then, if the pattern emerging are interesting, she will be able to save those rules to a growing library of curated rules (maybe with some sort of voting). There will be an option to change the rules of the drawing at any time, either to new random rules or fetching them from the library. 
+#+BEGIN_HTML
+  <table border="1">
+  <tbody><tr>
+  <th rowspan="3" colspan="2"></th>
+  <th colspan="6">Current color</th>
+  </tr>
+  <tr>
+  <th colspan="3">0</th>
+  <th colspan="3">1</th>
+  </tr>
+  <tr style="font-size:9pt">
+  <th>Write color</th>
+  <th>Turn</th>
+  <th>Next state</th>
+  <th>Write color</th>
+  <th>Turn</th>
+  <th>Next state</th>
+  </tr>
+  <tr>
+  <th rowspan="2">Current state</th>
+  <th>0</th>
+  <td>1</td>
+  <td>R</td>
+  <td>0</td>
+  <td>1</td>
+  <td>R</td>
+  <td>1</td>
+  </tr>
+  <tr>
+  <th>1</th>
+  <td>0</td>
+  <td>N</td>
+  <td>0</td>
+  <td>0</td>
+  <td>N</td>
+  <td>1</td>
+  </tr>
+  </tbody></table>
+#+END_HTML  
+
 ** Background
 The idea for the project came from [[http://maximecb.github.io/Turing-Drawings/][Maxime Chevalier-Boisvert]]s
 website, where a simple Turing Drawing generator lets you see a quick
@@ -31,13 +74,15 @@ rules can create.
 It is interesting to experience the rules unfold into patterns that can't be predicted from just thinking about the rules. They have to be simulated 'for the magic to happen'. 
 
 ** Implementation
-I'll make a 2D Array, /world/, representing the state, ie. what is displayed on screen (This works for 2 colors, for 3 colors it should be a 3D Array, with the color in the third dimension). 
+I have a 2D array, /world/, with each cell representing the color of
+each pixel on the canvas. Then I have a designated cell that is
+/turned on/, and store it's /state/ and /heading/ in separate
+variables. 
 
-I have an 'active cell' that will move and update each time-step. It will update according to the rules picked from the list of all possible rules. 
-
-*IDEA*: To get /really/ fast drawing, the active cell could run in a for loop in the draw function, and after we have looped for some time we update the screen with the current state of /world/. Might speed it up. Without it I can achieve sub 10k fps. But a display can update around 60 Hz. Right?
-
-
+The rules are randomly produced on the fly, according to how many
+colors and states are currently allowed. Or they can be retrieved
+from a text file where previously saved rules are stored, with one
+set of rules on each line. 
 * Footnotes
 [1] Stephen Wolfram, "A New Kind of Science," (Wolfram Media, 2002), [[http://www.wolframscience.com/nksonline/toc.html][Online here]]
 
