@@ -11,7 +11,8 @@ color lightBlue = color(0, 255, 255);
 color purple = color(255,0,255);
 int onX, onY;
 int heading; // N=0, E=1, S=2, W=3
-int speed = 25;
+int speed = 100;
+int maxSpeed = 5000;
 int nColors = 3;
 int nStates = 3;
 int maxColors = 8;
@@ -28,10 +29,11 @@ int offsetY;
 ControlP5 cp5;
 Textlabel nColorsText;
 Textlabel nStatesText;
+Slider speedslider;
 
 void setup(){
     frameRate(10000);
-    size(drawX + 300, drawY + 200);
+    size(drawX + 300, drawY + 100);
     background(blue);
 
     // Trying CP5
@@ -40,81 +42,119 @@ void setup(){
     // Possibly speed up rendering by changing font
     //cp5.setFont(createFont("",10));
     int startButtonX = 500;
-    int startButtonY = 100;
+    int startButtonY = 50;
     int buttonWidth = 120;
     int buttonHeight = 19;
     int buttonPadding = 5;
     
+    int row = 0;
+    
     cp5.addButton("cp5RandomRule")
-        .setPosition(startButtonX,startButtonY)
+        .setPosition(startButtonX,startButtonY+ row* ( buttonHeight + buttonPadding))
         .setSize(buttonWidth,buttonHeight)
-        .setCaptionLabel("Get new random rule")
+        .setCaptionLabel("Get new random rule (c)")
         ;
-
-
-    cp5.addButton("cp5CoolRule")
-        .setPosition(startButtonX, startButtonY + buttonHeight + buttonPadding)
-        .setSize(buttonWidth, buttonHeight)
-        .setCaptionLabel("Get a saved rule")
-        ;
+    row++;
 
     cp5.addButton("cp5ResetWorld")
-        .setPosition(startButtonX, startButtonY + 2*(buttonHeight + buttonPadding))
+        .setPosition(startButtonX,startButtonY+ row* ( buttonHeight + buttonPadding))
         .setSize(buttonWidth, buttonHeight)
-        .setCaptionLabel("Reset the World")
+        .setCaptionLabel("Reset the World (r)")
         ;
+    row++;
+
+    cp5.addButton("cp5CoolRule")
+        .setPosition(startButtonX,startButtonY+ row* ( buttonHeight + buttonPadding))
+        .setSize(buttonWidth, buttonHeight)
+        .setCaptionLabel("Load a saved rule (l)")
+        ;
+    row++;
 
     cp5.addButton("cp5SaveRule")
-        .setPosition(startButtonX, startButtonY + 3*(buttonHeight + buttonPadding))
+        .setPosition(startButtonX,startButtonY+ row* ( buttonHeight + buttonPadding))
         .setSize(buttonWidth, buttonHeight)
         .setCaptionLabel("Save current rule")
         ;
+    row++;
 
-    cp5.addSlider("speed")
-        .setPosition(startButtonX,startButtonY + 4*(buttonHeight + buttonPadding))
+    speedslider = cp5.addSlider("speed")
+        .setPosition(startButtonX,startButtonY+ row* ( buttonHeight + buttonPadding))
         .setSize(buttonWidth, buttonHeight)
-        .setRange(1, 200)
-        .setValue(25)
+        .setRange(1, maxSpeed)
+        .setValue(speed)
         .setCaptionLabel("Speed")
-        ; 
+        ;
+    row++;
     
+    cp5.addButton("lessSpeed")
+        .setPosition(startButtonX,startButtonY + row*(buttonHeight + buttonPadding))
+        .setSize(buttonWidth/2 - buttonPadding, buttonHeight)
+        .setCaptionLabel("-Speed")
+        ;      
+    
+    cp5.addButton("moreSpeed")
+        .setPosition(startButtonX + buttonWidth/2 ,startButtonY + row*(buttonHeight + buttonPadding))
+        .setSize(buttonWidth/2, buttonHeight)
+        .setCaptionLabel("+Speed")
+        ;  
+    row++;
  
     cp5.addButton("lessColor")
-        .setPosition(startButtonX,startButtonY + 5*(buttonHeight + buttonPadding))
+        .setPosition(startButtonX,startButtonY + row*(buttonHeight + buttonPadding))
         .setSize(buttonWidth/2 - buttonPadding, buttonHeight)
         .setCaptionLabel("-Color")
         ;      
     
     cp5.addButton("moreColor")
-        .setPosition(startButtonX + buttonWidth/2 ,startButtonY + 5*(buttonHeight + buttonPadding))
+        .setPosition(startButtonX + buttonWidth/2 ,startButtonY + row*(buttonHeight + buttonPadding))
         .setSize(buttonWidth/2, buttonHeight)
         .setCaptionLabel("+Color")
         ;  
 
     nColorsText = cp5.addTextlabel("nColorsText")
         .setText(""+nColors)
-        .setPosition(startButtonX + buttonWidth + 5 ,startButtonY + 5*(buttonHeight + buttonPadding) + 5)
+        .setPosition(startButtonX + buttonWidth + 5 ,startButtonY + row*(buttonHeight + buttonPadding) + 5)
         ;
-    
+    row++;
+
     cp5.addButton("lessState")
-        .setPosition(startButtonX,startButtonY + 6*(buttonHeight + buttonPadding))
+        .setPosition(startButtonX,startButtonY + row*(buttonHeight + buttonPadding))
         .setSize(buttonWidth/2 - buttonPadding, buttonHeight)
         .setCaptionLabel("-State")
         ;      
     
     cp5.addButton("moreState")
-        .setPosition(startButtonX + buttonWidth/2 ,startButtonY + 6*(buttonHeight + buttonPadding))
+        .setPosition(startButtonX + buttonWidth/2 ,startButtonY + row*(buttonHeight + buttonPadding))
         .setSize(buttonWidth/2, buttonHeight)
         .setCaptionLabel("+State")
         ;  
 
     nStatesText = cp5.addTextlabel("nStatesText")
         .setText(""+nStates)
-        .setPosition(startButtonX + buttonWidth + 5 ,startButtonY + 6*(buttonHeight + buttonPadding) + 5)
+        .setPosition(startButtonX + buttonWidth + 5 ,startButtonY + row*(buttonHeight + buttonPadding) + 5)
         ;
+    row++;
 
 
+    // cp5.addTextlabel("title")
+    //     .setText("Turing drawings/turmites")
+    //     .setPosition(50,25)
+    //     .setFont(createFont("FreeMono Bold",30))
+    //     .setColorValue(white);
+    //     ;
 
+
+    // cp5.addTextlabel("subtitle")
+    //     .setText("by Kasper P. Lauritzen")
+    //     .setPosition(50,55)
+    //     .setFont(createFont("Monospaced",20))
+    //     .setColorValue(white);
+    //     ;
+
+    //     String[] fontList = PFont.list();
+    //     println(fontList);
+        
+        
     world = new int[drawX][drawY];
 
     colors = new color[maxColors];
@@ -127,10 +167,9 @@ void setup(){
     colors[6] = lightBlue;
     colors[7] = purple;
     rules = new int[nColors][nStates][3];
-    setRandomRule();
     
     loadCoolRules();
-
+    getCoolRule();
     // Loop through world
     // There might be a world = zeros() function instead
     for (int x=0; x<drawX; x++){
@@ -139,32 +178,29 @@ void setup(){
         }
     }
 
-    // Set ON cell
-    onX = int(drawX/2);
-    onY = int(drawY/2);
-    world[onX][onY] = 1;
-    heading = int(random(4));
-    state = 1;
 
     offsetX = (width - drawX)/2 - 100;
     offsetY = (height - drawY)/2;
-        
+    resetWorld();        
     // draw border
     rect(offsetX,offsetY, drawX,drawY);
 }
 
 void draw(){
+    loadPixels();
     for(int i = 0; i < speed; i++){
         int onColor = world[onX][onY];
         int writeColor = rules[onColor][state][0];
         int changeHeading = rules[onColor][state][1];
         state = rules[onColor][state][2];
         world[onX][onY] = writeColor;
-        set(onX + offsetX, onY + offsetY,colors[writeColor]);
+        pixels[(onY + offsetY) * width + (onX + offsetX)] = colors[writeColor];
+        //set(onX + offsetX, onY + offsetY,colors[writeColor]);
         heading = (heading + changeHeading) % 4; 
         // Follow heading, update onX, onY
         getNewCoor(onX, onY);
     }
+    updatePixels();
 }
 
 
@@ -205,13 +241,7 @@ void setRandomRule(){
 void keyPressed(){
     if (key == 'c'){
         setRandomRule();
-    }
-    else if (key == 'f'){
-        speed++;
-    }
-    else if (key == 's'){
-        speed--;
-        if (speed < 1){speed = 1;}
+        resetWorld();
     }
     else if (key == 'r'){
         resetWorld();
@@ -227,13 +257,7 @@ void keyPressed(){
             isDrawing = true;
         }
     }
-    // Print array
-    else if (key == '.'){
-        String str = rules2str();
-        coolRules.append(str);
-        saveRules();
-    }
-    else if (key == ','){
+    else if (key == 'l'){
         resetWorld();
         getCoolRule();
     }
@@ -399,5 +423,26 @@ void lessState() {
     loop();
 }
 
+void moreSpeed() {
+    if (speed >= maxSpeed){
+        speed = maxSpeed;
+        println("Max speed: "+maxSpeed);
+    }
+    else {
+        speed = int(speed * 1.05) + 2;
+    }
+    speedslider.setValue(speed);
+}
+
+void lessSpeed() {
+    if (speed <= 2){
+        speed = 2;
+        println("Min. speed: 2");
+    }
+    else {
+        speed = int(speed / 1.05);
+    }
+    speedslider.setValue(speed);
+}
 
 
