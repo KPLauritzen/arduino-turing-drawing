@@ -1,12 +1,44 @@
-* Turing Drawings with Processing
-Final project for UCSB Art 122 (Spring 2013) by Kasper Primdal Lauritzen.
+#+TITLE: Turing Drawings with Processing
+#+OPTIONS: toc:nil
+Final project for UCSB Art 122 (Spring 2013) by Kasper Primdal
+Lauritzen.
+
+http://github.com/KPLauritzen/arduino-turing-drawing
+
+** User Instruction (Kasper is not here, so READ ME INSTEAD)
+This project makes generative art on a 400x400px canvas. It does so
+according to some simple rules on how to update the color of a pixel,
+given its current color and 'state'. 
+
+Try getting a new random rule (The top right button). Because the
+rules are randomly generated it is not certain that the new rule did
+anything, or if it did, that it produces anything interesting. Maybe
+try clearing the world (2nd button). 
+
+Try this a few times. Press 'c' as a shortcut. 
+
+Try changing the number of allowed colors and states (The 2 bottom
+rows) 
+
+Sometimes it will turn out that the rules produce a static picture in
+the end, sometimes some oscillation will happen, many times seemingly
+random noise will just continue. But we cannot predict what will
+happen beforehand. Even though it is completely determined by the
+rules, we have to /actually run/ the simulation to find out. 
+A bit further down you can see an example of a ruleset for 2 colors
+and 2 states, and an image showing the drawing after the first few
+1000 steps.
+
+If you find a cool set of rules, you can save them by clicking the
+save button. And you can load rules that other people found by
+clicking load. 
 
 ** Abstract
 I created a way for the audience to see, create and play with Turing
 Drawings. A Turing Drawing is a 2D picture that evolves, pixel by
 pixel, according to simple rules. This is a
 Universal Turing Machine (It can in theory produce any desired
-output). 
+output).
 
 Simple rules can create powerful patterns, oscillations or seemingly
 random noise.
@@ -17,6 +49,7 @@ to save those rules to a growing library of curated rules. There will
 be an option to change the rules of the drawing at any time, either to
 new random rules or fetching them from the library. 
 
+[[file:turmite1.png]]
 #+BEGIN_HTML
   <table border="1">
   <tbody><tr>
@@ -62,28 +95,39 @@ The idea for the project came from [[http://maximecb.github.io/Turing-Drawings/]
 website, where a simple Turing Drawing generator lets you see a quick
 simulation of random rules (Cool examples [[http://maximecb.github.io/Turing-Drawings/#4,3,2,1,2,1,2,3,0,1,1,1,2,2,1,1,3,1,1,2,2,2,1,2,1,2,3,2,0,3,1,2,0,2,1,3,2,0][here]] and [[http://maximecb.github.io/Turing-Drawings/#4,3,3,1,3,2,2,2,1,1,3,3,1,2,1,1,1,3,1,0,2,2,0,2,1,3,0,2,3,2,1,3,0,1,3,3,1,0][here]]).
 
-Another inspiration is Stephen Wolfram's /A New Kind of Science/ [1]. Here the simplest possible rules, Cellular Automata, are described and explored (esp. in chapter 3). 
+Another inspiration is Stephen Wolfram's /A New Kind of
+Science/ [1]. Here the simplest possible rules, Cellular Automata, are
+described and explored.
 
-And a clear precursor for this pixel-by-pixel evolution is Conway's Game of Life [2]. 
+And a clear precursor for this pixel-by-pixel evolution is Conway's
+Game of Life [2].  
 
-My project will differ from other implementations of Turing Drawings in the interactivity. Being able to change the rules 'mid-game' will completely alter the pattern that emerges.  
+My project will differ from other implementations of Turing Drawings
+in the interactivity. Being able to change the rules 'mid-game' will
+completely alter the pattern that emerges.
+
 ** Goals
-The goal is to let the audience explore the patterns and flows that simple
-rules can create. 
+The goal is to let the audience explore the patterns and flows that
+simple rules can create.
 
-It is interesting to experience the rules unfold into patterns that can't be predicted from just thinking about the rules. They have to be simulated 'for the magic to happen'. 
+It is interesting to experience the rules unfold into patterns that
+can't be predicted from just thinking about the rules. They have to be
+simulated 'for the magic to happen'.
 
 ** Implementation
 I have a 2D array, /world/, with each cell representing the color of
 each pixel on the canvas. Then I have a designated cell that is
 /turned on/, and store it's /state/ and /heading/ in separate
-variables. 
+variables.
 
 The rules are randomly produced on the fly, according to how many
 colors and states are currently allowed. Or they can be retrieved
 from a text file where previously saved rules are stored, with one
 set of rules on each line. 
 * Footnotes
-[1] Stephen Wolfram, "A New Kind of Science," (Wolfram Media, 2002), [[http://www.wolframscience.com/nksonline/toc.html][Online here]]
+[1] Stephen Wolfram, "A New Kind of Science," (Wolfram Media, 2002),
+[[http://www.wolframscience.com/nksonline/toc.html][Online here]]. (See esp. in chapter 3).  
 
-[2] Martin Gardner, "Mathematical Games - The fantastic combinations of John Conway's new solitaire game 'life'". Scientific American 223. pp. 120–123 
+[2] Martin Gardner, "Mathematical Games - The fantastic combinations
+of John Conway's new solitaire game 'life'". Scientific
+American 223. pp. 120–123  
